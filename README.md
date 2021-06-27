@@ -1,6 +1,6 @@
 # Stool
 
-stool is an wrapper over selenium to perform different utility task.
+stool is an wrapper over selenium to perform various task.
 
 
 ## Features
