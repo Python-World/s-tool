@@ -5,17 +5,25 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.utils import ChromeType
 
-from utils import (SToolException, click, current_url, get_cookies,
-                   get_element, get_session, hide_show_elements, page_source,
-                   take_screenshot, visit)
+from s_tool.utils import (
+    SToolException,
+    click,
+    current_url,
+    get_cookies,
+    get_element,
+    get_session,
+    hide_show_elements,
+    page_source,
+    take_screenshot,
+    visit,
+)
 
 
 class SeleniumDriver:
-    """SeleniumDriver class to manage driver object and all utility functions at one place
-    """
+    """SeleniumDriver class to manage driver object and all utility functions at one place"""
 
     def __init__(self, browser=None, headless=False):
-        self.browser_list = ['chrome', 'chromium', 'firefox']
+        self.browser_list = ["chrome", "chromium", "firefox"]
         self.driver = None
         self.browser = browser
         self.headless = headless
@@ -24,44 +32,45 @@ class SeleniumDriver:
         self._load_methods()
 
     def close(self):
-        """will stop driver after program execution
-        """
+        """will stop driver after program execution"""
         if self.driver:
             self.driver.quit()
 
     def __exit__(self, type, value, traceback):
-        """release the resources occupied with the current session
-        """
+        """release the resources occupied with the current session"""
         self.close()
 
     def __enter__(self):
         return self._load_driver()
 
     def _load_driver(self):
-        """Create Selenium webdriver object
-        """
+        """Create Selenium webdriver object"""
         self.close()
         browser = self.browser.lower()
         if browser not in self.browser_list:
             raise SToolException(
-                f"provided browser {browser} doesn't exists. available brower list:{self.browser_list}")
+                f"provided browser {browser} doesn't exists. available brower list:{self.browser_list}"
+            )
 
         # add chrome and firefox different options
-        options = getattr(webdriver, browser if browser !=
-                          'chromium' else 'chrome').options.Options()
+        options = getattr(
+            webdriver, browser if browser != "chromium" else "chrome"
+        ).options.Options()
         if self.headless:
-            options.add_argument('--headless')
+            options.add_argument("--headless")
 
-        if browser in ['chrome', 'chromium']:
-            browser_type = ChromeType.CHROMIUM if browser == 'chromium' else ChromeType.GOOGLE
-            self.driver = webdriver.Chrome(ChromeDriverManager(
-                chrome_type=browser_type).install(),
-                options=options)
+        if browser in ["chrome", "chromium"]:
+            browser_type = (
+                ChromeType.CHROMIUM if browser == "chromium" else ChromeType.GOOGLE
+            )
+            self.driver = webdriver.Chrome(
+                ChromeDriverManager(chrome_type=browser_type).install(), options=options
+            )
 
         if browser == "firefox":
             self.driver = webdriver.Firefox(
-                executable_path=GeckoDriverManager().install(),
-                options=options)
+                executable_path=GeckoDriverManager().install(), options=options
+            )
 
         # Maximize window to give normal browser feel
         self.driver.maximize_window()
@@ -83,9 +92,9 @@ class SeleniumDriver:
         self.hide = partial(hide_show_elements, self.driver)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # Create A Driver Object
-    with SeleniumDriver('firefox', headless=False) as obj:
+    with SeleniumDriver("firefox", headless=False) as obj:
         # visit https:example.com
-        obj.visit(r'https://quotes.toscrape.com/')
+        obj.visit(r"https://quotes.toscrape.com/")
