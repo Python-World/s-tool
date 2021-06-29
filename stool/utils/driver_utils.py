@@ -158,7 +158,7 @@ def display_element(driver, element, hide=None):
         None
     """
 
-    hide_or_show = 'block' if hide else 'None'
+    hide_or_show = 'inline' if hide else 'None'
     driver.execute_script(
         f"arguments[0].style.display = '{hide_or_show}';", element)
 
