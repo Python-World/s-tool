@@ -3,30 +3,26 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from utils.driver_exceptions import SToolException
+from s_tool.utils.driver_exceptions import SToolException
 
 
 def get_session(driver):
-    """Return Selenium Driver session id
-    """
+    """Return Selenium Driver session id"""
     return driver.session_id
 
 
 def visit(driver, url):
-    """visit given url 
-    """
+    """visit given url"""
     driver.get(url)
 
 
 def page_source(driver):
-    """Return html page source
-    """
+    """Return html page source"""
     return driver.page_source
 
 
 def current_url(driver):
-    """Return current url
-    """
+    """Return current url"""
     return driver.current_url
 
 
@@ -56,10 +52,10 @@ def get_element(driver, locator_type, locator_text, many=None):
 
         many         : optional default None,
                        1: select multiple element
-                       0: select single element 
+                       0: select single element
 
     Returns:
-        Return an element object if found otherwise 
+        Return an element object if found otherwise
         return None
     """
 
@@ -67,8 +63,8 @@ def get_element(driver, locator_type, locator_text, many=None):
     if hasattr(By, locator_type):
         try:
             locator = get_locator(locator_type, locator_text)
-            is_multiple = 's' if many else ''
-            func = getattr(driver, f'find_element{is_multiple}')
+            is_multiple = "s" if many else ""
+            func = getattr(driver, f"find_element{is_multiple}")
             return func(*locator)
         except NoSuchElementException:
             return None
@@ -93,7 +89,8 @@ def click(driver, locator_type, locator_text, click_time=10):
     try:
         elem_locator = get_locator(locator_type, locator_text)
         element = WebDriverWait(driver, click_time).until(
-            EC.element_to_be_clickable(elem_locator))
+            EC.element_to_be_clickable(elem_locator)
+        )
         element.click()
         return True
     except TimeoutException:
@@ -113,25 +110,25 @@ def get_cookies(driver):
                         no cookies return an empty dictionary
     """
     cookies = driver.get_cookies()
-    cookies_dict = {cookie['name']: cookie['value'] for cookie in cookies}
+    cookies_dict = {cookie["name"]: cookie["value"] for cookie in cookies}
     return cookies_dict or {}
 
 
 def take_screenshot(driver, element=None):
     """take screenshot of given element if element is
-        not given take a full page screeenshot and return
-        data in bytes
+    not given take a full page screeenshot and return
+    data in bytes
 
-        Args:
-            driver  : selenium Webdriver
-            element : default None, provide element locator
-                    example : element=('id','element_id')
+    Args:
+        driver  : selenium Webdriver
+        element : default None, provide element locator
+                example : element=('id','element_id')
 
-        Returns:
-            returns byte object,if element not present 
-            it will return None.
+    Returns:
+        returns byte object,if element not present
+        it will return None.
 
-        full screenshot will work only in headless mode.
+    full screenshot will work only in headless mode.
     """
     if element and isinstance(element, tuple):
         locator_type, locator_text = element
@@ -147,7 +144,7 @@ def take_screenshot(driver, element=None):
 
 
 def display_element(driver, element, hide=None):
-    """ hide or show single element
+    """hide or show single element
 
     Args:
         driver  : selenium webdriver
@@ -158,9 +155,8 @@ def display_element(driver, element, hide=None):
         None
     """
 
-    hide_or_show = 'inline' if hide else 'None'
-    driver.execute_script(
-        f"arguments[0].style.display = '{hide_or_show}';", element)
+    hide_or_show = "inline" if hide else "None"
+    driver.execute_script(f"arguments[0].style.display = '{hide_or_show}';", element)
 
 
 def hide_show_elements(driver, elements, hide=None):

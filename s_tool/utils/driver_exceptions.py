@@ -1,5 +1,3 @@
-
-
 class SToolException(Exception):
     """
     Base Class for selenium tools Exceptions
