@@ -1,3 +1,9 @@
+# Configuration for code editors
+.vscode
+
+# All files like t.py, t.ipynb, t.md etc
+t.*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
