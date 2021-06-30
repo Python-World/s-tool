@@ -1,35 +1,32 @@
-from typing import Union
-
-from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from s_tool.exceptions import SToolException
+from s_tool.utils.driver_exceptions import SToolException
 
 
-def get_session(driver: webdriver) -> str:
+def get_session(driver):
     """Return Selenium Driver session id"""
     return driver.session_id
 
 
-def visit(driver: webdriver, url: str) -> None:
+def visit(driver, url):
     """visit given url"""
     driver.get(url)
 
 
-def page_source(driver: webdriver) -> str:
+def page_source(driver):
     """Return html page source"""
     return driver.page_source
 
 
-def current_url(driver: webdriver) -> str:
+def current_url(driver):
     """Return current url"""
     return driver.current_url
 
 
-def get_locator(locator_type: str, locator_text: str) -> tuple:
+def get_locator(locator_type, locator_text):
     """Return element locator
 
     Args:
@@ -43,9 +40,7 @@ def get_locator(locator_type: str, locator_text: str) -> tuple:
     return getattr(By, locator), locator_text
 
 
-def get_element(
-    driver: webdriver, locator_type: str, locator_text: str, many: bool = None
-):
+def get_element(driver, locator_type, locator_text, many=None):
     """Get element using locator type and locator text
 
     Args:
@@ -77,9 +72,7 @@ def get_element(
         raise SToolException("INVALID_SELECTOR")
 
 
-def click(
-    driver: webdriver, locator_type: str, locator_text: str, click_time: int = 10
-) -> Union[bool, None]:
+def click(driver, locator_type, locator_text, click_time=10):
     """Return True if element clicked otherwise return None
 
     Args:
@@ -106,7 +99,7 @@ def click(
         raise SToolException(ex)
 
 
-def get_cookies(driver: webdriver) -> dict:
+def get_cookies(driver):
     """Accept driver object and return cookies in dictionary
 
     Args:
@@ -121,7 +114,7 @@ def get_cookies(driver: webdriver) -> dict:
     return cookies_dict or {}
 
 
-def take_screenshot(driver: webdriver, element: tuple = None) -> Union[bytes, None]:
+def take_screenshot(driver, element=None):
     """take screenshot of given element if element is
     not given take a full page screeenshot and return
     data in bytes
@@ -150,7 +143,7 @@ def take_screenshot(driver: webdriver, element: tuple = None) -> Union[bytes, No
         return driver.get_screenshot_as_png()
 
 
-def display_element(driver: webdriver, element, hide=None) -> None:
+def display_element(driver, element, hide=None):
     """hide or show single element
 
     Args:
@@ -166,7 +159,7 @@ def display_element(driver: webdriver, element, hide=None) -> None:
     driver.execute_script(f"arguments[0].style.display = '{hide_or_show}';", element)
 
 
-def hide_show_elements(driver: webdriver, elements: list, hide: bool = None) -> None:
+def hide_show_elements(driver, elements, hide=None):
     """hide or show multiple elements
 
     Args:
@@ -181,7 +174,7 @@ def hide_show_elements(driver: webdriver, elements: list, hide: bool = None) -> 
     """
     for element_locator in elements:
         locator_type, locator_value = element_locator
-        element_list = get_element(driver, locator_type, locator_value, many=True)
+        element_list = get_element(driver, locator_type, locator_value, 1)
         if element_list:
             for element in element_list:
                 display_element(driver, element, hide)
