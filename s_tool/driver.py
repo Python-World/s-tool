@@ -1,5 +1,4 @@
 from functools import partial
-from os import system
 
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -46,9 +45,6 @@ class SeleniumDriver:
 
     def _load_driver(self):
         """Create Selenium webdriver object"""
-        # Attaching GH_TOKEN value to resolve github public api issue
-        system("export GH_TOKEN='asdasdahsdat'")
-
         self.close()
         browser = self.browser.lower()
         if browser not in self.browser_list:
