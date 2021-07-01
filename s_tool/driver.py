@@ -19,9 +19,6 @@ from s_tool.utils import (
     visit,
 )
 
-# Attaching GH_TOKEN value to resolve github public api issue
-system("export GH_TOKEN='asdasdasdasd'")
-
 
 class SeleniumDriver:
     """SeleniumDriver class to manage driver object and all utility functions at one place"""
@@ -49,6 +46,9 @@ class SeleniumDriver:
 
     def _load_driver(self):
         """Create Selenium webdriver object"""
+        # Attaching GH_TOKEN value to resolve github public api issue
+        system("export GH_TOKEN='asdasdahsdat'")
+
         self.close()
         browser = self.browser.lower()
         if browser not in self.browser_list:
