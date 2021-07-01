@@ -5,8 +5,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.utils import ChromeType
 
+from s_tool.exceptions import SToolException
 from s_tool.utils import (
-    SToolException,
     click,
     current_url,
     get_cookies,
@@ -93,8 +93,4 @@ class SeleniumDriver:
 
 
 if __name__ == "__main__":
-
-    # Create A Driver Object
-    with SeleniumDriver("firefox", headless=False) as obj:
-        # visit https:example.com
-        obj.visit(r"https://quotes.toscrape.com/")
+    pass

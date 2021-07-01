@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+      <title>S-Tool</title>
+   </head>
+   <body>
+      <div class="container">
+         <div class="jumbotron text-center">
+            <h1>S-Tool</h1>
+            <p>Selenium Tools</p>
+            <p>(It can be used to write test cases)</p>
+         </div>
+         <div class="row">
+            <div class="col-sm">
+               <div class="card">
+                  <div class="card-header text-center">
+                     Links
+                  </div>
+                  <div class="card-body">
+                     <h5 class="card-title">Use Different Element Locator to Extract text and link from Anchor tags</h5>
+                     <hr/>
+                     <p class="card-text">link_text :
+                        <a href="https://github.com/python-World/S-tool" class="btn-primary" on>S-Tool</a>
+                        <a href="https://github.com/python-World" id='python_world'>python-World</a>
+                     </p>
+                     <p class="card-text">partial_link_text : 
+                        <a href="#" name='python_world'>python-World</a>
+                        <a href="https://github.com" class="btn-primary">Github</a>
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <hr>
+         </div>
+         <div class="row">
+            <div class="col-sm">
+               <div class="card">
+                  <div class="card-header text-center">
+                     Dropdowns    
+                  </div>
+                  <div class="card-body">
+                     <h5>Code to parse dropdown element</h5>
+                     <h5 class="card-title">
+                        <code>
+                        from s_tool.parser import select_options
+                        <br>
+                        select_options(element)
+                        </code>
+                     </h5>
+                     <hr>
+                     <p class="card-text">
+                        with class attribute
+                        <select class="form-control" aria-label="Default select example">
+                           <option selected>Select Value</option>
+                           <option value="1">One</option>
+                           <option value="2">Two</option>
+                           <option value="3">Three</option>
+                        </select>
+                     </p>
+                     <p class="card-text">
+                        with id and name attribute
+                        <select name='dropdown_name' id='dropdown_id' class="form-control form-select-lg mb-3" aria-label=".form-select-lg example">
+                           <option selected value="">--Select Value--</option>
+                           <option value="11">Eleven</option>
+                           <option value="12">Twelve</option>
+                           <option value="13">Thirteen</option>
+                        </select>
+                     </p>
+                     <p class="card-text">
+                        with name attribute
+                        <select name='open_dropdown' class="form-control" size="3" aria-label="size 3 select example">
+                           <option selected>Open this select menu</option>
+                           <option value="1">One</option>
+                           <option value="2">Two</option>
+                           <option value="3">Three</option>
+                        </select>
+                     </p>
+                     <p class="card-text">
+                        disabled
+                        <select class="form-control" aria-label="Disabled select example" disabled>
+                           <option selected value="default">default</option>
+                           <option value="1">One</option>
+                           <option value="2">Two</option>
+                           <option value="3">Three</option>
+                        </select>
+                     </p>
+                     <p class="card-text">
+                        without value
+                        <select class="form-control" id="sel1">
+                           <option>1</option>
+                           <option>2</option>
+                           <option>3</option>
+                           <option>4</option>
+                        </select>
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-sm">
+               <div class="card">
+                  <div class="card-header text-center">
+                     Table
+                  </div>
+                  <div class="card-body">
+                     <h5 class="card-title"></h5>
+                     <hr/>
+                     <p class="card-text">Basic Table
+                     <table class="table">
+                        <thead>
+                           <tr>
+                              <th scope="col">SrNo</th>
+                              <th scope="col">First</th>
+                              <th scope="col">Last</th>
+                              <th scope="col">Handle</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>1</td>
+                              <td>Mark</td>
+                              <td>Otto</td>
+                              <td>@mdo</td>
+                           </tr>
+                           <tr>
+                              <td>2</td>
+                              <td>Jacob</td>
+                              <td>Thornton</td>
+                              <td>@fat</td>
+                           </tr>
+                           <tr>
+                              <td>3</td>
+                              <td>Larry</td>
+                              <td>the Bird</td>
+                              <td>@twitter</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     </p>
+                     <p class="card-text">Multiple colspan
+                     <table class="table table-bordered" id="tablewithcolspan">
+                        <thead>
+                           <tr>
+                              <th scope="col">SR</th>
+                              <th scope="col">First</th>
+                              <th scope="col">Last</th>
+                              <th scope="col">Handle</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>1</td>
+                              <td>Mark</td>
+                              <td>Otto</td>
+                              <td>@mdo</td>
+                           </tr>
+                           <tr>
+                              <td>2</td>
+                              <td>Jacob</td>
+                              <td>Thornton</td>
+                              <td>@fat</td>
+                           </tr>
+                           <tr>
+                              <td>3</td>
+                              <td colspan="2">Larry the Bird</td>
+                              <td>@twitter</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     </p>
+                     <p class="card-text">Table without theader,tbody
+                     <table class="table table-bordered" id="tablewithoutheader">
+                        <tr>
+                           <td>1</td>
+                           <td>Mark</td>
+                           <td>Otto</td>
+                           <td>@mdo</td>
+                        </tr>
+                        <tr>
+                           <td>2</td>
+                           <td>Jacob</td>
+                           <td>Thornton</td>
+                           <td>@fat</td>
+                        </tr>
+                     </table>
+                     </p>
+                     <p class="card-text">Table with key and values
+                     <table class="table table-bordered" id="tablewithkeyvalue">
+                        <thead>
+                           <tr>
+                              <th scope="col">key</th>
+                              <th scope="col">Value</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td>Name</td>
+                              <td>Mark</td>
+                           </tr>
+                           <tr>
+                              <td>User</td>
+                              <td>@mark</td>
+                           </tr>
+                           <tr>
+                              <td>Age</td>
+                              <td >23</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+   </body>
+</html>
