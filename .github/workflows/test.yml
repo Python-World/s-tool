@@ -24,6 +24,8 @@ jobs:
       - name: Build python package
         run: poetry build
       - name: Run tests
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: poetry run pytest
       - uses: codecov/codecov-action@v1
         with:
