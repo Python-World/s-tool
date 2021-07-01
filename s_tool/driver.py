@@ -1,4 +1,5 @@
 from functools import partial
+from os import system
 
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -17,6 +18,9 @@ from s_tool.utils import (
     take_screenshot,
     visit,
 )
+
+# Attaching GH_TOKEN value to resolve github public api issue
+system("export GH_TOKEN='asdasdasdasd'")
 
 
 class SeleniumDriver:
