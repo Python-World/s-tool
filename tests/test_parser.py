@@ -1,15 +1,13 @@
-from os.path import abspath
-
 from s_tool.driver import SeleniumDriver
 from s_tool.parser import select_options
+
+from . import TEST_URL
 
 
 def test_select():
     with SeleniumDriver("firefox", headless=True) as obj:
 
-        # Sample File run from local test folder
-        index_file = "tests/index.html"
-        obj.get(f"file://{abspath(index_file)}")
+        obj.get(TEST_URL)
 
         # Test dropdown options with element id
         options_dicts = select_options(obj.element("id", "sel1"))
