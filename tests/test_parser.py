@@ -9,7 +9,7 @@ def test_select():
 
         # Sample File run from local test folder
         index_file = "tests/index.html"
-        obj.visit(f"file://{abspath(index_file)}")
+        obj.get(f"file://{abspath(index_file)}")
 
         # Test dropdown options with element id
         options_dicts = select_options(obj.element("id", "sel1"))

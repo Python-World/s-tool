@@ -3,8 +3,9 @@ from typing import Union
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import Select, WebDriverWait
 
 from s_tool.exceptions import SToolException
 
@@ -185,3 +186,66 @@ def hide_show_elements(driver: webdriver, elements: list, hide: bool = None) -> 
         if element_list:
             for element in element_list:
                 display_element(driver, element, hide)
+
+
+def select_option(element, _value, _by=0):
+    """Select Dropdown option
+
+    Args:
+        element : selenium element
+        _value  : str,value,text
+        _by     : an int value from range(3)
+
+                    0: default select option using by value
+                    1: select using visible text
+                    2: select using index but also provide _value as int
+    Returns:
+        None
+    """
+
+    if not element and element.tag_name != "select":
+        raise SToolException("INVALIDELEMENT")
+
+    elif _by not in [0, 1, 2]:
+        raise SToolException("INVALIDSELECTOR")
+
+    elif _by == 2 and type(_value) is not int:
+        raise SToolException("INVALIDVALUE")
+
+    else:
+        select = Select(element)
+        select_type = {
+            0: getattr(select, "select_by_value"),
+            1: getattr(select, "select_by_visible_text"),
+            2: getattr(select, "select_by_index"),
+        }
+
+        select_type[_by](_value)
+
+
+def fill(driver: WebDriver, kwargs: dict) -> None:
+    """Fill information in html element using name attribute
+
+    Args:
+        driver : selenium Webdriver
+        kwargs : dict,{name:value_to_select_or_enter}
+
+        _by    : default 0 , used for select dropdown
+
+    """
+
+    for name, value in kwargs.items():
+        element = get_element(driver, "name", name)
+        if element.tag_name == "select":
+            # Select Dropdown value
+            select_option(element, value, _by=0)
+        elif element.get_attribute("type") == "radio":
+            # Click on radio element using value
+            radio_element = get_element(driver, "xpath", f'//input[@value="{value}"]')
+            radio_element.click()
+        elif element.tag_name == "input":
+            # input,textarea add values
+            element.clear()
+            element.send_keys(value)
+        else:
+            raise SToolException("NOTIMPLEMENTED")
