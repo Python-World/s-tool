@@ -9,6 +9,7 @@ from s_tool.exceptions import SToolException
 from s_tool.utils import (
     click,
     current_url,
+    fill,
     get_cookies,
     get_element,
     get_session,
@@ -82,7 +83,7 @@ class SeleniumDriver:
 
     def _load_methods(self):
         self.session = partial(get_session, self.driver)
-        self.visit = partial(visit, self.driver)
+        self.get = partial(visit, self.driver)
         self.text = partial(page_source, self.driver)
         self.url = partial(current_url, self.driver)
         self.element = partial(get_element, self.driver)
@@ -90,6 +91,7 @@ class SeleniumDriver:
         self.cookies = partial(get_cookies, self.driver)
         self.screenshot = partial(take_screenshot, self.driver)
         self.hide = partial(hide_show_elements, self.driver)
+        self.fill = partial(fill, self.driver)
 
 
 if __name__ == "__main__":

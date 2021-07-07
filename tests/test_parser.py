@@ -1,27 +1,25 @@
-from os.path import abspath
-
 from s_tool.driver import SeleniumDriver
-from s_tool.parser import select_options
+from s_tool.parser import get_table, select_options
+
+from . import TEST_URL
 
 
 def test_select():
     with SeleniumDriver("firefox", headless=True) as obj:
 
-        # Sample File run from local test folder
-        index_file = "tests/index.html"
-        obj.visit(f"file://{abspath(index_file)}")
+        obj.get(TEST_URL)
 
         # Test dropdown options with element id
-        options_dicts = select_options(obj.element("id", "sel1"))
+        options_dicts = select_options(obj.element("sel1"))
         actual_result = {"1": "1", "2": "2", "3": "3", "4": "4"}
         assert options_dicts == actual_result
 
         # Test for invalid element
-        options_dicts = select_options(obj.element("id", "select_id"))
+        options_dicts = select_options(obj.element("select_id", "id"))
         assert options_dicts == {}
 
         # Test for disabled dropdown
-        options_dicts = select_options(obj.element("xpath", '//select[@disabled=""]'))
+        options_dicts = select_options(obj.element('//select[@disabled=""]', "xpath"))
         assert options_dicts == {
             "default": "default",
             "1": "One",
@@ -30,7 +28,7 @@ def test_select():
         }
 
         # Test for swaping keys and values\
-        elem = obj.element("xpath", '//select[@disabled=""]')
+        elem = obj.element('//select[@disabled=""]', "xpath")
         options_dicts = select_options(elem, swap=True)
         assert options_dicts == {
             "default": "default",
@@ -38,3 +36,11 @@ def test_select():
             "Two": "2",
             "Three": "3",
         }
+
+
+def test_table():
+    with SeleniumDriver("firefox", headless=True) as obj:
+        obj.get(TEST_URL)
+        table = obj.element('//table[@class="table"]', "xpath")
+        table_data = get_table(table)
+        assert len(table_data) == 4
