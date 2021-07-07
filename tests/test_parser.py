@@ -39,7 +39,7 @@ def test_select():
 
 
 def test_table():
-    with SeleniumDriver("chrome", headless=True) as obj:
+    with SeleniumDriver("firefox", headless=True) as obj:
         obj.get(TEST_URL)
         table = obj.element('//table[@class="table"]', "xpath")
         table_data = get_table(table)
