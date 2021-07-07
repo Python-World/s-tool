@@ -45,7 +45,7 @@ def get_locator(locator_type: str, locator_text: str) -> tuple:
 
 
 def get_element(
-    driver: webdriver, locator_type: str, locator_text: str, many: bool = None
+    driver: webdriver, locator_text: str, locator_type: str = "id", many: bool = None
 ):
     """Get element using locator type and locator text
 
@@ -140,7 +140,7 @@ def take_screenshot(driver: webdriver, element: tuple = None) -> Union[bytes, No
     """
     if element and isinstance(element, tuple):
         locator_type, locator_text = element
-        ele = get_element(driver, locator_type, locator_text)
+        ele = get_element(driver, locator_text, locator_type)
         if ele:
             return ele.screenshot_as_png
         return None
@@ -182,7 +182,7 @@ def hide_show_elements(driver: webdriver, elements: list, hide: bool = None) -> 
     """
     for element_locator in elements:
         locator_type, locator_value = element_locator
-        element_list = get_element(driver, locator_type, locator_value, many=True)
+        element_list = get_element(driver, locator_value, locator_type, many=True)
         if element_list:
             for element in element_list:
                 display_element(driver, element, hide)
@@ -235,13 +235,13 @@ def fill(driver: WebDriver, kwargs: dict) -> None:
     """
 
     for name, value in kwargs.items():
-        element = get_element(driver, "name", name)
+        element = get_element(driver, name, "name")
         if element.tag_name == "select":
             # Select Dropdown value
             select_option(element, value, _by=0)
         elif element.get_attribute("type") == "radio":
             # Click on radio element using value
-            radio_element = get_element(driver, "xpath", f'//input[@value="{value}"]')
+            radio_element = get_element(driver, f'//input[@value="{value}"]', "xpath")
             radio_element.click()
         elif element.tag_name == "input":
             # input,textarea add values
