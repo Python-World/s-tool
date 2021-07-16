@@ -2,7 +2,7 @@ from s_tool.exceptions import SToolException
 from s_tool.utils import get_element
 
 
-def select_options(element, swap=None, text_exclude=[]):
+def select_options(element, swap=None, text_exclude=None):
     """Return dropdown option in key value pair
 
     Args:
