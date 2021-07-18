@@ -7,6 +7,7 @@ def select_options(element, swap=None, text_exclude=None):
 
     Args:
         element      : An select element
+        swap         : list of swapped values
         text_exclude : list of values to exclude from result
 
     Returns:
