@@ -30,7 +30,7 @@ def current_url(driver: webdriver) -> str:
     return driver.current_url
 
 
-def get_locator(locator_type: str, locator_text: str) -> tuple:
+def get_locator(locator_text: str, locator_type: str = "id") -> tuple:
     """Return element locator
 
     Args:
@@ -68,7 +68,7 @@ def get_element(
     locator_type = locator_type.upper()
     if hasattr(By, locator_type):
         try:
-            locator = get_locator(locator_type, locator_text)
+            locator = get_locator(locator_text, locator_type)
             is_multiple = "s" if many else ""
             func = getattr(driver, f"find_element{is_multiple}")
             return func(*locator)
@@ -79,7 +79,7 @@ def get_element(
 
 
 def click(
-    driver: webdriver, locator_type: str, locator_text: str, click_time: int = 10
+    driver: webdriver, locator_text: str, locator_type: str = "id", click_time: int = 10
 ) -> Union[bool, None]:
     """Return True if element clicked otherwise return None
 
@@ -95,7 +95,7 @@ def click(
         None    : Not clicked or Not Found
     """
     try:
-        elem_locator = get_locator(locator_type, locator_text)
+        elem_locator = get_locator(locator_text, locator_type)
         element = WebDriverWait(driver, click_time).until(
             EC.element_to_be_clickable(elem_locator)
         )
@@ -249,3 +249,27 @@ def fill(driver: WebDriver, kwargs: dict) -> None:
             element.send_keys(value)
         else:
             raise SToolException("NOTIMPLEMENTED")
+
+
+def is_element(driver, locator_text, locator_type="id", wait_time=2):
+    """Check if the element is present on page
+
+    Args:
+        driver : selenium Webdriver,
+        locator_type : provide any attribute type
+                    id,class_name,tag_name
+                    xpath, css_selector
+
+        locator_text : attribute value
+
+    Returns:
+        True: If element exists on page
+        False: If element not exists on page
+    """
+
+    try:
+        locator = get_locator(locator_text, locator_type)
+        WebDriverWait(driver, wait_time).until(EC.presence_of_element_located(locator))
+        return True
+    except:
+        return False
