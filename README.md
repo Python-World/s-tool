@@ -22,16 +22,18 @@
 - WebDriver
   - Manage multiple web drivers such as chrome,chromium,firefox.
 - Different Utilities
-  - Retrieve element with 5 different attribute.
-  - Perform clicks on element
-  - Take full page and element screenshot.
+  - Retrieve elements with 5 different attributes.
+  - Perform clicks on element,
+  - Take a full page and element screenshot.
   - Hide and show elements.
   - Information filling on different form elements such as text,radio,checkbox.
-  - Retrieves current cookies from browser.
-  - Retrieve url and web page source
+  - Retrieves current cookies from the browser.
+  - Retrieve url and web page source.
+  - Add or modify existing cookies.
+  - Check Existence of an element on the page.
 - Element Parser
-  - table Information
-  - Retrieve dropdown options in dictionary
+  - table Information.
+  - Retrieve dropdown options in the dictionary.
 
 ## How To Use
 
@@ -74,19 +76,19 @@ from s_tool.driver import SeleniumDriver
 
 
 class SBot(SeleniumDriver):
-    """Example Bot using s-tool"""
+   """Example Bot using s-tool"""
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+   def __init__(self, *args, **kwargs):
+       super().__init__(*args, **kwargs)
 
-    def run(self):
-        self.get("https://google.com")
-        sessionid = self.session()
-        url = self.url()
-        cookies = self.cookies()
+   def run(self):
+       self.get("https://google.com")
+       sessionid = self.session()
+       url = self.url()
+       cookies = self.cookies()
 
-        # print sessionid,url,cookies
-        print(f"\nurl     :   {url} \nsession :   {sessionid}\ncookies :   {cookies}\n")
+       # print sessionid,url,cookies
+       print(f"\n url     :   {url} \n session :   {sessionid}\n cookies :   {cookies}\n")
 
 
 bot = SBot("firefox", headless=True)  # change headless=False to run with gui mode
@@ -103,13 +105,13 @@ bot.close()
 from s_tool.driver import SeleniumDriver as SBot
 
 with SBot("firefox", headless=True) as obj:
-    obj.get("https://google.com")
-    sessionid = obj.session()
-    url = obj.url()
-    cookies = obj.cookies()
+   obj.get("https://google.com")
+   sessionid = obj.session()
+   url = obj.url()
+   cookies = obj.cookies()
 
-    # print sessionid,url,cookies
-    print(f"\nurl     :   {url} \nsession :   {sessionid}\ncookies :   {cookies}\n")
+   # print sessionid,url,cookies
+   print(f"\n url     :   {url} \n session :   {sessionid}\n cookies :   {cookies}\n")
 
 ```
 
@@ -118,7 +120,7 @@ with SBot("firefox", headless=True) as obj:
 - Web driver utilities
   - Scrolling element and page.
   - Handling popup and alert boxes.
-  - Switching windows,frame,tabs,iframes.
+  - Switching windows,frames,tabs,iframes.
   - logger.
 - Element Parser
   - list
