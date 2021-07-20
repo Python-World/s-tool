@@ -16,6 +16,7 @@ from s_tool.utils import (
     hide_show_elements,
     is_element,
     page_source,
+    set_cookies,
     take_screenshot,
     visit,
 )
@@ -94,6 +95,7 @@ class SeleniumDriver:
         self.hide = partial(hide_show_elements, self.driver)
         self.fill = partial(fill, self.driver)
         self.is_element = partial(is_element, self.driver)
+        self.set_cookies = partial(set_cookies, self.driver)
 
 
 if __name__ == "__main__":

@@ -122,6 +122,44 @@ def get_cookies(driver: webdriver) -> dict:
     return cookies_dict or {}
 
 
+def set_cookies(
+    driver: webdriver,
+    drop_all: bool = False,
+    drop_keys: set = set(),
+    **cookies,
+) -> None:
+    """Set cookies into webdriver instance
+
+    Args:
+        driver    : selenium webdriver.
+        drop_all  : default False, set it to True to delete all cookies.
+        drop_keys : a set of cookie keys to delete from the browser.
+        **cookies : variable length of cookies.
+
+    Returns:
+        None
+
+    Usage:
+        set_cookies(driver,name="s-tool",version=1)
+        set_cookies(driver,drop_all=True,name="s-tool",version=1)
+        set_cookies(driver,**{'name':"s-tool","version":1}
+    """
+    # cookies name and value must be in string
+    cookies = {str(k): str(v) for k, v in cookies.items()}
+
+    # Delete all cookies
+    if drop_all:
+        driver.delete_all_cookies()
+
+    # Delete only given cookies Name
+    for name in drop_keys:
+        driver.delete_cookie(name)
+
+    # Add new cookies
+    for name, value in cookies.items():
+        driver.add_cookie({"name": name, "value": value})
+
+
 def take_screenshot(driver: webdriver, element: tuple = None) -> Union[bytes, None]:
     """take screenshot of given element if element is
     not given take a full page screeenshot and return
