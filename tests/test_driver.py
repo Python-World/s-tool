@@ -5,7 +5,7 @@ from . import TEST_URL
 
 def test_cookies():
     with SeleniumDriver("firefox", headless=True) as obj:
-        obj.get("http://google.com")
+        obj.get("https://www.google.com/")
 
         # Validate cookies type
         assert type(obj.cookies()) is dict
@@ -24,3 +24,18 @@ def test_cookies():
         obj.set_cookies(drop_keys={"version"})
         cookies = obj.cookies()
         assert cookies.get("version", 1) == 1
+
+
+def test_base():
+    with SeleniumDriver("firefox", headless=True) as obj:
+        URL = "https://www.google.com/"
+        obj.get(URL)
+
+        # session
+        assert type(obj.session()) is str
+
+        # current_url
+        assert URL in obj.url()
+
+        # page_source
+        assert len(obj.text()) > 100
