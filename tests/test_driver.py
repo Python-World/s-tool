@@ -39,3 +39,6 @@ def test_base():
 
         # page_source
         assert len(obj.text()) > 100
+
+        # user agent type
+        assert type(obj.ua()) is str
