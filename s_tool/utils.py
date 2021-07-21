@@ -311,3 +311,18 @@ def is_element(driver, locator_text, locator_type="id", wait_time=2):
         return True
     except:
         return False
+
+
+def get_user_agent(driver: webdriver) -> str:
+    """Return current user agent string
+
+    Args:
+        driver  : selenium web driver
+
+    Retuns:
+        str
+
+    Usage:
+        get_user_agent()
+    """
+    return driver.execute_script("return navigator.userAgent")
