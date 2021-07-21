@@ -13,6 +13,7 @@ from s_tool.utils import (
     get_cookies,
     get_element,
     get_session,
+    get_user_agent,
     hide_show_elements,
     is_element,
     page_source,
@@ -96,6 +97,7 @@ class SeleniumDriver:
         self.fill = partial(fill, self.driver)
         self.is_element = partial(is_element, self.driver)
         self.set_cookies = partial(set_cookies, self.driver)
+        self.ua = partial(get_user_agent, self.driver)
 
 
 if __name__ == "__main__":
