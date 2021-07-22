@@ -20,7 +20,7 @@ def select_options(element, swap=None, text_exclude=None):
         for option in options:
             func = option.get_attribute
             text, value = func("text"), func("value")
-            if text not in text_exclude:
+            if text_exclude and text not in text_exclude:
                 if swap:
                     text, value = value, text
                 option_dict[value] = text
