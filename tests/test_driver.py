@@ -31,6 +31,8 @@ def test_base():
         URL = "https://www.google.com/"
         obj.get(URL)
 
+        # Verify driver
+        assert "ie" in obj.browser_list
         # session
         assert type(obj.session()) is str
 

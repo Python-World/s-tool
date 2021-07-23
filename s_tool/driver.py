@@ -3,6 +3,7 @@ from functools import partial
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.microsoft import IEDriverManager
 from webdriver_manager.utils import ChromeType
 
 from s_tool.exceptions import SToolException
@@ -27,7 +28,7 @@ class SeleniumDriver:
     """SeleniumDriver class to manage driver object and all utility functions at one place"""
 
     def __init__(self, browser=None, headless=False):
-        self.browser_list = ["chrome", "chromium", "firefox"]
+        self.browser_list = ["chrome", "chromium", "firefox", "ie"]
         self.driver = None
         self.browser = browser
         self.headless = headless
@@ -74,6 +75,11 @@ class SeleniumDriver:
         if browser == "firefox":
             self.driver = webdriver.Firefox(
                 executable_path=GeckoDriverManager().install(), options=options
+            )
+
+        if browser == "ie":
+            self.driver = webdriver.Ie(
+                executable_path=IEDriverManager().install(), options=options
             )
 
         # Maximize window to give normal browser feel
