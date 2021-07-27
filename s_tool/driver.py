@@ -42,11 +42,23 @@ class SeleniumDriver:
             self.driver.quit()
 
     def __exit__(self, type, value, traceback):
-        """release the resources occupied with the current session"""
+        """release the resources occupied with the current session
+
+        Args:
+            type ([type]): type
+            value ([type]): value
+            traceback ([type]): and traceback
+        """
         self.close()
 
     def __enter__(self):
-        """llows you to implement objects which can be used easily with the with statement"""
+        """Returns an selenium webdriver
+        Allows you to implement objects
+        which can be used easily with the with statement
+
+        Returns:
+            [webDriver]: selenium webdriver
+        """
         return self._load_driver()
 
     def _load_driver(self):

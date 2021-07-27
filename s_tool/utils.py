@@ -1,6 +1,3 @@
-"""
-
-"""
 from typing import Union
 
 from selenium import webdriver
@@ -14,34 +11,63 @@ from s_tool.exceptions import SToolException
 
 
 def get_session(driver: webdriver) -> str:
-    """Return Selenium Driver session id"""
+    """Return webdriver session
+
+    Args:
+        driver (webdriver): selenium webdriver
+
+    Returns:
+        str: sample '41ecb942-cd73-4407-aadd-acc7b8fbcd47
+    """
     return driver.session_id
 
 
 def visit(driver: webdriver, url: str) -> None:
-    """visit given url"""
+    """Visit given url
+
+    Args:
+        driver (webdriver): selenium webdriver
+        url (str): [description]
+
+    Returns:
+        None
+    """
     driver.get(url)
 
 
 def page_source(driver: webdriver) -> str:
-    """Return html page source"""
+    """Return html page source which is rendered
+
+    Args:
+        driver (webdriver): selenium webdriver
+
+    Returns:
+        str: an html string
+    """
     return driver.page_source
 
 
 def current_url(driver: webdriver) -> str:
-    """Return current url"""
+    """Returns Current loaded url
+
+    Args:
+        driver (webdriver): selenium webdriver
+
+    Returns:
+        str: An URL
+    """
     return driver.current_url
 
 
 def get_locator(locator_text: str, locator_type: str = "id") -> tuple:
-    """Return element locator
+    """Return an locator value
 
     Args:
-        locator_type : provide any attribute type
-                    id,class_name,tag_name
-                    xpath, css_selector
+        locator_text (str): attribute value
+        locator_type (str, optional): provide any attribute type.If not provided id will use
 
-        locator_text : attribute value
+    Returns:
+        tuple: a locator value (By.locator,locator_value)
     """
     locator = locator_type.upper()
     return getattr(By, locator), locator_text
@@ -50,22 +76,22 @@ def get_locator(locator_text: str, locator_type: str = "id") -> tuple:
 def get_element(
     driver: webdriver, locator_text: str, locator_type: str = "id", many: bool = None
 ):
-    """Get element using locator type and locator text
+    """Return element using locator type and text
 
     Args:
-        locator_type : provide any attribute type
-                    id,class_name,tag_name
-                    xpath, css_selector
+        driver (webdriver): selenium webdriver
+        locator_text (str): attribute value
+        locator_type (str, optional): attribute name. Defaults to "id".
+                                    id,class_name,tag_name,xpath,css_selector
+        many (bool, optional): Returns multiple element if True. Defaults to None.
 
-        locator_text : attribute value
-
-        many         : optional default None,
-                       1: select multiple element
-                       0: select single element
+    Raises:
+        SToolException: If INVALID_SELECTOR provided
 
     Returns:
-        Return an element object if found otherwise
-        return None
+        [list,None]: Returns list of element if many=True
+                    Else Return Single element
+                    Return None If Element not Found
     """
 
     locator_type = locator_type.upper()
@@ -84,18 +110,21 @@ def get_element(
 def click(
     driver: webdriver, locator_text: str, locator_type: str = "id", click_time: int = 10
 ) -> Union[bool, None]:
-    """Return True if element clicked otherwise return None
+    """[summary]
 
     Args:
-        locator_type : provide any attribute type
-                    id,class_name,tag_name
-                    xpath, css_selector
+       driver (webdriver): selenium webdriver
+        locator_text (str): attribute value
+        locator_type (str, optional): attribute name. Defaults to "id".
+                                    id,class_name,tag_name,xpath,css_selector
+        click_time (int, optional): time to wait till element is clickable. Defaults to 10.
 
-        locator_text : attribute value
+    Raises:
+        SToolException: [description]
 
     Returns:
-        True    : If element clicked
-        None    : Not clicked or Not Found
+        Union[bool, None]: True if element is clicked
+                           False if element not clicked
     """
     try:
         elem_locator = get_locator(locator_text, locator_type)
@@ -111,15 +140,16 @@ def click(
 
 
 def get_cookies(driver: webdriver) -> dict:
-    """Accept driver object and return cookies in dictionary
+    """Return cookies in dictionary
 
     Args:
-        driver : A selenium WebDriver
+        driver (webdriver): selenium webdriver
 
     Returns:
-        cookies_dict : return cookies in dicionary format if
-                        no cookies return an empty dictionary
+        dict: return cookies in dicionary,
+              will return {} if no cookies
     """
+
     cookies = driver.get_cookies()
     cookies_dict = {cookie["name"]: cookie["value"] for cookie in cookies}
     return cookies_dict or {}
@@ -131,22 +161,17 @@ def set_cookies(
     drop_keys: set = set(),
     **cookies,
 ) -> None:
-    """Set cookies into webdriver instance
+    """Add cookies into driver
 
     Args:
-        driver    : selenium webdriver.
-        drop_all  : default False, set it to True to delete all cookies.
-        drop_keys : a set of cookie keys to delete from the browser.
-        **cookies : variable length of cookies.
+        driver (webdriver): selenium webdriver
+        drop_all (bool, optional): Delete all cookies if True. Defaults to False.
+        drop_keys (set, optional): Set of cookies name. Defaults to set().
 
     Returns:
         None
-
-    Usage:
-        set_cookies(driver,name="s-tool",version=1)
-        set_cookies(driver,drop_all=True,name="s-tool",version=1)
-        set_cookies(driver,**{'name':"s-tool","version":1}
     """
+
     # cookies name and value must be in string
     cookies = {str(k): str(v) for k, v in cookies.items()}
 
@@ -164,20 +189,16 @@ def set_cookies(
 
 
 def take_screenshot(driver: webdriver, element: tuple = None) -> Union[bytes, None]:
-    """take screenshot of given element if element is
-    not given take a full page screeenshot and return
-    data in bytes
+    """Return screenshot
 
     Args:
-        driver  : selenium Webdriver
-        element : default None, provide element locator
-                example : element=('id','element_id')
+        driver (webdriver): selenium webdriver
+        element (tuple, optional): provide element locator
+                            example : element=('id','element_id').
+                            Defaults to None.
 
     Returns:
-        returns byte object,if element not present
-        it will return None.
-
-    full screenshot will work only in headless mode.
+        Union[bytes, None]: Returns screenshot object
     """
     if element and isinstance(element, tuple):
         locator_type, locator_text = element
@@ -192,14 +213,14 @@ def take_screenshot(driver: webdriver, element: tuple = None) -> Union[bytes, No
         return driver.get_screenshot_as_png()
 
 
-def display_element(driver: webdriver, element, hide=None) -> None:
-    """hide or show single element
+def display_element(driver: webdriver, element, hide: bool = None) -> None:
+    """Hide and display element
 
     Args:
-        driver  : selenium webdriver
-        element : an selenium element
-        hide    : default value is None, to hide element
-                    hide=1 to display hidden element
+        driver (webdriver): selenium webdriver
+        element ([selenium]): an selenium element
+        hide (bool, optional): will display element if True. Defaults to None.
+
     Returns:
         None
     """
@@ -209,14 +230,14 @@ def display_element(driver: webdriver, element, hide=None) -> None:
 
 
 def hide_show_elements(driver: webdriver, elements: list, hide: bool = None) -> None:
-    """hide or show multiple elements
+    """Hide and display elements
 
     Args:
-        driver  : selenium webdriver
-        elements  : list of tuples,[('locator_type','value')]
-                example : [('id','id_value')]
-        hide    : default value is None, to hide element
-                 hide=1 to display hidden element
+        driver (webdriver): selenium webdriver
+        elements (list): an list of element locator
+                        [('locator_type','value')]
+                        example : [('id','id_value')]
+        hide (bool, optional): display elements if 'True' else Hide elements. Defaults to None.
 
     Returns:
         None
@@ -230,16 +251,21 @@ def hide_show_elements(driver: webdriver, elements: list, hide: bool = None) -> 
 
 
 def select_option(element, _value, _by=0):
-    """Select Dropdown option
+    """select dropdown option
 
     Args:
-        element : selenium element
-        _value  : str,value,text
-        _by     : an int value from range(3)
-
+        element ([type]): selenium element
+        _value ([type]): str,value,text
+        _by (int, optional): selector type, int. Defaults to 0.
                     0: default select option using by value
                     1: select using visible text
                     2: select using index but also provide _value as int
+
+    Raises:
+        SToolException: INVALIDELEMENT,if element is not select(dropdown)
+        SToolException: INVALIDSELECTOR, wrong selector provided
+        SToolException: INVALIDVALUE, for select_by_index second parameter required only integer
+
     Returns:
         None
     """
@@ -264,22 +290,27 @@ def select_option(element, _value, _by=0):
         select_type[_by](_value)
 
 
-def fill(driver: WebDriver, kwargs: dict) -> None:
-    """Fill information in html element using name attribute
+def fill(driver: WebDriver, kwargs, _by=0):
+    """Insert or select values using name attribute
 
     Args:
-        driver : selenium Webdriver
-        kwargs : dict,{name:value_to_select_or_enter}
+        driver (WebDriver): selenium webdriver
+        kwargs (dict): name and values in dict
+                    example: {name:value_to_select_or_enter}
+        _by    : Selector type, Default 0
 
-        _by    : default 0 , used for select dropdown
+    Raises:
+        SToolException: NOTIMPLEMENTED,if html elment is not defined
 
+    Returns:
+        None
     """
 
     for name, value in kwargs.items():
         element = get_element(driver, name, "name")
         if element.tag_name == "select":
             # Select Dropdown value
-            select_option(element, value, _by=0)
+            select_option(element, value, _by=_by)
         elif element.get_attribute("type") == "radio":
             # Click on radio element using value
             radio_element = get_element(driver, f'//input[@value="{value}"]', "xpath")
@@ -292,20 +323,20 @@ def fill(driver: WebDriver, kwargs: dict) -> None:
             raise SToolException("NOTIMPLEMENTED")
 
 
-def is_element(driver, locator_text, locator_type="id", wait_time=2):
-    """Check if the element is present on page
+def is_element(
+    driver: WebDriver, locator_text: str, locator_type: str = "id", wait_time: int = 2
+) -> bool:
+    """Check element is loaded on page or not
 
     Args:
-        driver : selenium Webdriver,
-        locator_type : provide any attribute type
-                    id,class_name,tag_name
-                    xpath, css_selector
-
-        locator_text : attribute value
+        driver (WebDriver): selenium webdriver
+        locator_text (str): attribute value
+        locator_type (str, optional): attribute name. Defaults to "id".
+                                    id,class_name,tag_name,xpath,css_selector
+        wait_time (int, optional): wait time to load element if not loaded. Defaults to 2.
 
     Returns:
-        True: If element exists on page
-        False: If element not exists on page
+        [bool]: True if element available, else False
     """
 
     try:
@@ -317,15 +348,13 @@ def is_element(driver, locator_text, locator_type="id", wait_time=2):
 
 
 def get_user_agent(driver: webdriver) -> str:
-    """Return current user agent string
+    """Return user agent
 
     Args:
-        driver  : selenium web driver
+        driver (webdriver): selenium webdriver
 
-    Retuns:
-        str
-
-    Usage:
-        get_user_agent()
+    Returns:
+        str: an user agent string.
     """
+
     return driver.execute_script("return navigator.userAgent")

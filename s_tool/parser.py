@@ -2,17 +2,19 @@ from s_tool.exceptions import SToolException
 from s_tool.utils import get_element
 
 
-def select_options(element, swap=None, text_exclude=[]):
+def select_options(element, swap=None, text_exclude=set()):
     """Return dropdown option in key value pair
 
     Args:
-        element      : An select element
-        text_exclude : list of values to exclude from result
+        element ([selenium.element]): An select element
+        swap ([bool], optional): Value as key if True. Defaults to None.
+        text_exclude (set, optional): to exclude from result. Defaults to set().
 
     Returns:
-        return dict of values and text of select element,
-        return empty dict() if element is not valid or not exists
+        [dict]: return dict of values and text of select element,
+                return empty dict() if element is not valid or not exists
     """
+
     option_dict = dict()
     if element and hasattr(element, "tag_name") and element.tag_name == "select":
         options = get_element(element, "option", "tag_name", many=True)
@@ -36,7 +38,6 @@ def get_table(table):
     Returns:
         return list of row list,
         return [] if table not valid
-
     """
     results = []
     if table and hasattr(table, "tag_name") and table.tag_name == "table":
