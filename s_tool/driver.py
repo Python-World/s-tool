@@ -46,6 +46,7 @@ class SeleniumDriver:
         self.close()
 
     def __enter__(self):
+        """llows you to implement objects which can be used easily with the with statement"""
         return self._load_driver()
 
     def _load_driver(self):
@@ -91,6 +92,7 @@ class SeleniumDriver:
         return self
 
     def _load_methods(self):
+        """Load basic methods"""
         self.session = partial(get_session, self.driver)
         self.get = partial(visit, self.driver)
         self.text = partial(page_source, self.driver)

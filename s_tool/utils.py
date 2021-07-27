@@ -1,3 +1,6 @@
+"""
+
+"""
 from typing import Union
 
 from selenium import webdriver

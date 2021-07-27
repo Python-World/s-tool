@@ -10,6 +10,7 @@ class SBot(SeleniumDriver):
         super().__init__(*args, **kwargs)
 
     def run(self):
+        """Code to visit url and fetch cookies and basic info"""
         self.get("https://google.com")
         sessionid = self.session()
         url = self.url()

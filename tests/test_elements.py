@@ -4,6 +4,7 @@ from . import TEST_URL
 
 
 def test_select_box():
+    """test dropdown selection options"""
     with SeleniumDriver("firefox", headless=True) as obj:
         obj.get(TEST_URL)
 

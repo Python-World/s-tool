@@ -7,4 +7,5 @@ class SToolException(Exception):
         self.message = message
 
     def __str__(self):
+        """Returns an Exception"""
         return str(self.message)
