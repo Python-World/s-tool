@@ -4,6 +4,7 @@ from . import TEST_URL
 
 
 def test_cookies():
+    """Test Basic functionalities for adding and removing cookies."""
     with SeleniumDriver("firefox", headless=True) as obj:
         obj.get("https://www.google.com/")
 
@@ -27,6 +28,7 @@ def test_cookies():
 
 
 def test_base():
+    """Basic operation test cases"""
     with SeleniumDriver("firefox", headless=True) as obj:
         URL = "https://www.google.com/"
         obj.get(URL)

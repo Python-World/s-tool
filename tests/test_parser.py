@@ -5,6 +5,7 @@ from . import TEST_URL
 
 
 def test_select():
+    """Test dropdown related operations"""
     with SeleniumDriver("firefox", headless=True) as obj:
 
         obj.get(TEST_URL)
@@ -39,6 +40,7 @@ def test_select():
 
 
 def test_table():
+    """Test table rows"""
     with SeleniumDriver("firefox", headless=True) as obj:
         obj.get(TEST_URL)
         table = obj.element('//table[@class="table"]', "xpath")
