@@ -23,13 +23,15 @@
   - Manage multiple web drivers such as chrome,chromium,firefox.
 - Different Utilities
   - Retrieve elements with 5 different attributes.
-  - Perform clicks on element,
+  - Perform clicks on element.
   - Take a full page and element screenshot.
   - Hide and show elements.
   - Information filling on different form elements such as text,radio,checkbox.
   - Retrieves current cookies from the browser.
+  - Injecting new cookies into browser.
   - Retrieve url and web page source.
   - Add or modify existing cookies.
+  - Retrieve current user agent.
   - Check Existence of an element on the page.
 - Element Parser
   - table Information.
