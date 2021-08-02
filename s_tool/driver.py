@@ -24,14 +24,25 @@ from s_tool.utils import (
 )
 
 
+class Browser:
+    """Available Browser list"""
+
+    CHROME = "chrome"
+    CHROMIUM = "chromium"
+    FIREFOX = "firefox"
+    IE = "ie"
+
+
 class SeleniumDriver:
     """SeleniumDriver class to manage driver object and all utility functions at one place"""
 
-    def __init__(self, browser=None, headless=False):
+    def __init__(self, browser=None, headless=False, executable_path=None):
+
         self.browser_list = ["chrome", "chromium", "firefox", "ie"]
         self.driver = None
         self.browser = browser
         self.headless = headless
+        self.executable_path = executable_path
 
         self._load_driver()
         self._load_methods()
@@ -61,39 +72,69 @@ class SeleniumDriver:
         """
         return self._load_driver()
 
+    def _exe_path(self, manager, **params):
+        """Return Webdriver path
+
+        Args:
+            manager ([ChromeDriver,GeckoDriver,IEDriver]): WebDriver Manager
+
+        Returns:
+            [str]: return an executable path
+        """
+        if self.executable_path:
+            return self.executable_path
+        else:
+            return manager(**params).install()
+
+    def _browser(self, browser):
+        """Return if an valid browser passed
+
+        Args:
+            browser ([Browser]): Browser Type
+
+        Returns:
+            [bool]: True if browser is valid
+        """
+        available = False
+        if self.browser.lower() == browser:
+            available = True
+
+        return available
+
     def _load_driver(self):
         """Create Selenium webdriver object"""
         self.close()
         browser = self.browser.lower()
-        if browser not in self.browser_list:
-            raise SToolException(
-                f"provided browser {browser} doesn't exists. available brower list:{self.browser_list}"
-            )
+        func = partial(self._exe_path)
 
-        # add chrome and firefox different options
-        options = getattr(
-            webdriver, browser if browser != "chromium" else "chrome"
-        ).options.Options()
+        # Add Browser Options
+        browser_options = browser if browser != Browser.CHROMIUM else Browser.CHROME
+        options = getattr(webdriver, browser_options).options.Options()
+
         if self.headless:
             options.add_argument("--headless")
 
-        if browser in ["chrome", "chromium"]:
-            browser_type = (
-                ChromeType.CHROMIUM if browser == "chromium" else ChromeType.GOOGLE
-            )
-            self.driver = webdriver.Chrome(
-                ChromeDriverManager(chrome_type=browser_type).install(), options=options
-            )
+        if self._browser(Browser.CHROME):
+            exe_path = func(ChromeDriverManager, chrome_type=ChromeType.GOOGLE)
+            _webdriver = webdriver.Chrome
 
-        if browser == "firefox":
-            self.driver = webdriver.Firefox(
-                executable_path=GeckoDriverManager().install(), options=options
-            )
+        elif self._browser(Browser.CHROMIUM):
+            exe_path = func(ChromeDriverManager, chrome_type=ChromeType.CHROMIUM)
+            _webdriver = webdriver.Chrome
 
-        if browser == "ie":
-            self.driver = webdriver.Ie(
-                executable_path=IEDriverManager().install(), options=options
-            )
+        elif self._browser(Browser.FIREFOX):
+            exe_path = func(GeckoDriverManager)
+            _webdriver = webdriver.Firefox
+
+        elif self._browser(Browser.IE):
+            exe_path = func(IEDriverManager)()
+            _webdriver = webdriver.Ie
+
+        else:
+            err = f"browser not implemented. available browers :{self.browser_list}"
+            raise SToolException(err)
+
+        self.driver = _webdriver(executable_path=exe_path, options=options)
 
         # Maximize window to give normal browser feel
         self.driver.maximize_window()
