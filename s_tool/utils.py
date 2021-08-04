@@ -22,6 +22,25 @@ def get_session(driver: webdriver) -> str:
     return driver.session_id
 
 
+def is_local(path: str) -> str:
+    """Return valid URL path for file
+
+    Args:
+        path (str): normal path or URL
+
+    Returns:
+        str: Modified file path if local file
+            Returns path as it is if URL
+    """
+    import os
+
+    URL = path
+    if os.path.exists(path) or path.startswith("file"):
+        if not URL.startswith("file"):
+            URL = f"file://{URL}"
+    return URL
+
+
 def visit(driver: webdriver, url: str) -> None:
     """Visit given url
 
@@ -32,7 +51,7 @@ def visit(driver: webdriver, url: str) -> None:
     Returns:
         None
     """
-    driver.get(url)
+    driver.get(is_local(url))
 
 
 def page_source(driver: webdriver) -> str:
@@ -207,8 +226,8 @@ def take_screenshot(driver: webdriver, element: tuple = None) -> Union[bytes, No
             return ele.screenshot_as_png
         return None
     else:
-        width = driver.execute_script("return document.body.offsetWidth")
-        height = driver.execute_script("return document.body.offsetHeight")
+        width = driver.execute_script("return document.body.parentNode.scrollWidth")
+        height = driver.execute_script("return document.body.parentNode.scrollHeight")
         driver.set_window_size(width, height)
         return driver.get_screenshot_as_png()
 
