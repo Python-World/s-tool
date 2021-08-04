@@ -226,8 +226,8 @@ def take_screenshot(driver: webdriver, element: tuple = None) -> Union[bytes, No
             return ele.screenshot_as_png
         return None
     else:
-        width = driver.execute_script("return document.body.offsetWidth")
-        height = driver.execute_script("return document.body.offsetHeight")
+        width = driver.execute_script("return document.body.parentNode.scrollWidth")
+        height = driver.execute_script("return document.body.parentNode.scrollHeight")
         driver.set_window_size(width, height)
         return driver.get_screenshot_as_png()
 
