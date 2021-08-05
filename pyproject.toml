@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "s-tool"
-version = "0.0.1"
+version = "0.0.3"
 description = "Selenium wrapper to make your life easy."
 authors = ["Ravishankar Chavare", "Aahnik Daw <daw@aahnik.dev>"]
 license = "MIT"
