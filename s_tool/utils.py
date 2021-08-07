@@ -66,6 +66,18 @@ def page_source(driver: webdriver) -> str:
     return driver.page_source
 
 
+def get_webpage_title(driver: webdriver, url: str) -> str:
+    """Retrieve title of webpage
+    Args:
+        driver (webdriver): selenium webdriver
+        url (str): [description]
+    Returns:
+       str: webpage title
+    """
+    driver.get(is_local(url))
+    return driver.title
+
+
 def current_url(driver: webdriver) -> str:
     """Returns Current loaded url
 
