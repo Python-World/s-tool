@@ -33,6 +33,7 @@
   - Add or modify existing cookies.
   - Retrieve current user agent.
   - Check Existence of an element on the page.
+  - Execute JavaScript statment.
 - Element Parser
   - table Information.
   - Retrieve dropdown options in the dictionary.
