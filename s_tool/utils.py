@@ -377,3 +377,20 @@ def get_user_agent(driver: webdriver) -> str:
     """
 
     return driver.execute_script("return navigator.userAgent")
+
+
+def run_js(driver: webdriver, statement: str) -> str:
+    """Execute an javascript statement and return output
+
+    Args:
+        driver (webdriver): selenium webdriver
+        statement ([str]): and variable name or an statement to run
+
+    Returns:
+        str: console output in str format
+
+    Example:
+        Fetch URL
+            >>run_js(driver,document.URL)
+    """
+    return driver.execute_script(f"return {statement}")
