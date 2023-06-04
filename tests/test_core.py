@@ -29,7 +29,7 @@ class SeleniumToolsTestCase(unittest.TestCase):
         options.add_argument('--disable-gpu')  # Last I checked this was necessary.
 
         cls.driver = webdriver.Chrome(chrome_options=options,service=ChromeService(ChromeDriverManager().install()))
-        cls.selenium_tools = SeleniumTools(driver=cls.driver,parser_class=LXMLParser)
+        cls.selenium_tools = SeleniumTools(driver=cls.driver,parser=LXMLParser)
         cls.url = "https://www.example.com/"
         cls.example_file =os.path.join(os.path.dirname(__file__),'data/example.html')
         cls.selenium_tools.get(cls.url)
@@ -44,8 +44,8 @@ class SeleniumToolsTestCase(unittest.TestCase):
         self.assertIsInstance(supported_browsers, list)
         self.assertGreater(len(supported_browsers), 0)
 
-    def test_get_driver_sessionid(self):
-        session_id = self.selenium_tools.get_driver_sessionid()
+    def test_sessionid(self):
+        session_id = self.selenium_tools.sessionid()
         self.assertIsInstance(session_id, str)
         self.assertGreater(len(session_id), 0)
 
