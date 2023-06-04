@@ -8,10 +8,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath('..'))
 
-
-import sphinx_rtd_theme
 from s_tool import __version__ as _version
-
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information

@@ -20,10 +20,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
+from .driver import SeleniumDriver
 from .exceptions import InvalidWebDriverError, SToolException
 from .logger import logger
 from .parser import LxmlParser
-from .driver import SeleniumDriver
 
 
 class SeleniumTools:
