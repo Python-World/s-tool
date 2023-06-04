@@ -1,9 +1,9 @@
 """Example code with class"""
 
-from s_tool.driver import SeleniumDriver
+from s_tool.core import SeleniumTools
 
 
-class SBot(SeleniumDriver):
+class SBot(SeleniumTools):
     """Example Bot using s-tool"""
 
     def __init__(self, *args, **kwargs):
@@ -11,8 +11,9 @@ class SBot(SeleniumDriver):
 
     def run(self):
         """Code to visit url and fetch cookies and basic info"""
-        self.get("https://google.com")
-        sessionid = self.session()
+        url ="https://example.com"
+        self.get(url)
+        sessionid = self.sessionid()
         url = self.url()
         cookies = self.cookies()
 
@@ -20,6 +21,6 @@ class SBot(SeleniumDriver):
         print(f"\nurl     :   {url} \nsession :   {sessionid}\ncookies :   {cookies}\n")
 
 
-bot = SBot("firefox", headless=True)  # change headless=False to run with gui mode
+bot = SBot(browser ="firefox", headless=True)  # change headless=False to run with gui mode
 bot.run()
 bot.close()

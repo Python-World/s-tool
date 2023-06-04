@@ -1,3 +1,13 @@
+
+"""
+Exception classes
+"""
+
+
+class InvalidWebDriverError(Exception):
+    """Custom exception raised for an invalid WebDriver."""
+
+
 class SToolException(Exception):
     """
     Base Class for selenium tools Exceptions
