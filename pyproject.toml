@@ -6,7 +6,7 @@ authors = ["Ravishankar Chavare <chavare.ravi123@gmail.com>", "Aahnik Daw <daw@a
 packages = [{include = "s_tool"}]
 
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
 repository = "https://github.com/Python-World/s-tool"
 keywords = ["Python","Selenium","wrapper",'Webdriver',"Tools","Utilities"]
 classifiers = [
