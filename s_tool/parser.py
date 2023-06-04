@@ -1,56 +1,49 @@
-from s_tool.exceptions import SToolException
-from s_tool.utils import get_element
+"""
+Parser utilities using lxml
+"""
+from lxml.html import fromstring
 
 
-def select_options(element, swap=None, text_exclude=set()):
-    """Return dropdown option in key value pair
-
-    Args:
-        element ([selenium.element]): An select element
-        swap ([bool], optional): Value as key if True. Defaults to None.
-        text_exclude (set, optional): to exclude from result. Defaults to set().
-
-    Returns:
-        [dict]: return dict of values and text of select element,
-                return empty dict() if element is not valid or not exists
+class LxmlParser:
+    """
+    parse using response using lxml
     """
 
-    option_dict = dict()
-    if element and hasattr(element, "tag_name") and element.tag_name == "select":
-        options = get_element(element, "option", "tag_name", many=True)
+    def dropdown(self, html_string, text_exclude=None):
+        """
+        Parse a dropdown from an HTML string and return the options as a
+        list of tuples containing key-value pairs.
+
+        Args:
+            html_string: str
+                - The HTML string containing the dropdown element.
+            text_exclude:list, optional
+                - A list of values to exclude from the result.
+                - Defaults to None.
+
+        Returns:
+            result: list
+                - A list of tuples containing key-value pairs of the dropdown options.
+        """
+        if text_exclude is None:
+            text_exclude = []
+
+        tree = fromstring(html_string)
+
+        options = tree.findall(".//option")
+        result = []
+
         for option in options:
-            func = option.get_attribute
-            text, value = func("text"), func("value")
-            if text not in text_exclude:
-                if swap:
-                    text, value = value, text
-                option_dict[value] = text
+            text = option.text.strip()
+            value = option.get("value", "").strip()
 
-    return option_dict
+            if text and text not in text_exclude:
+                result.append((text, value))
 
+        return result
 
-def get_table(table):
-    """Return list of rows including header and footer of given table
-
-    Args:
-        A selenium table element
-
-    Returns:
-        return list of row list,
-        return [] if table not valid
-    """
-    results = []
-    if table and hasattr(table, "tag_name") and table.tag_name == "table":
-        for rows in table.find_elements_by_tag_name("tr"):
-            cell_data = []
-            for cell in rows.find_elements_by_xpath("td | th"):
-                colspan = cell.get_attribute("colspan")
-                cell_text = cell.text
-                if colspan:
-                    cell_data.extend([cell_text] + [""] * (int(colspan) - 1))
-                else:
-                    cell_data.append(cell_text)
-            results.append(cell_data)
-    else:
-        raise SToolException("INVALIDTABLE")
-    return results
+    def table(self, html_string):
+        """
+        Write your own custom parser class
+        """
+        raise NotImplementedError("table parser is not defined , Write your own custom parser")

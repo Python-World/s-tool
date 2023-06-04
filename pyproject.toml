@@ -1,12 +1,14 @@
 [tool.poetry]
 name = "s-tool"
-version = "0.0.3"
+version = "0.0.4"
 description = "Selenium wrapper to make your life easy."
-authors = ["Ravishankar Chavare", "Aahnik Daw <daw@aahnik.dev>"]
+authors = ["Ravishankar Chavare <chavare.ravi123@gmail.com>", "Aahnik Daw <daw@aahnik.dev>"]
+packages = [{include = "s_tool"}]
+
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/Python-World/s-tool"
-keywords = ["python","selenium","wrapper",'web-driver']
+keywords = ["Python","Selenium","wrapper",'Webdriver',"Tools","Utilities"]
 classifiers = [
   "License :: OSI Approved :: MIT License",
   "Natural Language :: English",
@@ -18,17 +20,18 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-selenium = "^3.141.0"
-webdriver-manager = "^3.4.2"
+python = "^3.11"
+selenium = "^4.9.1"
+lxml    = "^4.9.2"
+webdriver-manager = "^3.8.5"
 
 [tool.poetry.dev-dependencies]
-tox = "^3.23.1"
-black = "^21.6b0"
-isort = "^5.9.1"
+tox = "^4.5.1"
+black = "^23.3.0"
+isort = "^5.12.0"
 pre-commit = "^2.13.0"
-pytest = "^6.2.4"
-pytest-cov = "^2.12.1"
+pytest = "^7.3.0"
+pytest-cov = "^4.1.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -59,5 +62,3 @@ exclude = '''
 )
 '''
 
-[tool.pytest.ini_options]
-addopts = "--cov=./s_tool --cov-report=term-missing --cov-report=xml --cov-report=html"
