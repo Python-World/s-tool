@@ -74,6 +74,9 @@ class SeleniumTools:
 
     def _load_driver(self):
         """Create Selenium webdriver object"""
+        if self.browser is None:
+            self.browser='chrome'
+
         obj = SeleniumDriver(browser=self.browser,
                              headless=self.headless,
                              executable_path=self.executable_path)
@@ -203,6 +206,9 @@ class SeleniumTools:
         """
         err = "Selenium WebDriver validation failed."
         supported_browsers = self._get_supported_browsers()
+
+        if self.driver is None:
+            return False
 
         if hasattr(
                 self.driver,
