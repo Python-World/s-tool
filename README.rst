@@ -44,19 +44,19 @@ Usage
 
 .. code-block:: python
 
-      """Example code with context manager"""
+    """Example code with context manager"""
 
-      from s_tool.core import SeleniumDriver as SBot
+    from s_tool.core import SeleniumTools as SBot
 
-      with SBot("firefox", headless=True) as self:
-          self.get("https://google.com")
-          sessionid = self.session()
-          url = self.url()
-          cookies = self.cookies()
+    with SBot(browser="firefox", headless=True) as self:
+        self.get("https://example.com")
+        sessionid = self.sessionid()
+        url = self.url()
+        cookies = self.cookies()
 
-          # print sessionid,url,cookies
-          print(f"\nurl     :   {url} \nsession :   {sessionid}\ncookies :   {cookies}\n")
-
+        # print sessionid,url,cookies
+        print(f"\nurl     :   {url} \nsession :   {sessionid}\ncookies :   {cookies}\n")
+     
 
 * Example Using class
 
@@ -84,8 +84,7 @@ Usage
 
     bot = SBot(browser ="firefox", headless=True)  # change headless=False to run with gui mode
     bot.run()
-    bot.close()
-
+    bot._close()
 
 Methods
 ^^^^^^^
