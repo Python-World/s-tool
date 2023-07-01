@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "s-tool"
-version = "0.0.4"
+version = "0.0.5"
 description = "Selenium wrapper to make your life easy."
 authors = ["Ravishankar Chavare <chavare.ravi123@gmail.com>", "Aahnik Daw <daw@aahnik.dev>"]
 packages = [{include = "s_tool"}]
