@@ -28,7 +28,6 @@ extensions = [
     'sphinx.ext.doctest',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
-    'sphinx_rtd_theme',
     'sphinx_copybutton'
 ]
 
