@@ -8,7 +8,6 @@ import sys
 
 sys.path.insert(0, os.path.abspath('..'))
 
-from s_tool import __version__ as _version
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -18,12 +17,6 @@ copyright = '2023, Ravishankar Chavare'
 author = 'Ravishankar Chavare'
 release = '0.0.4'
 
-
-# The short X.Y version
-version = _version
-
-# The full version, including alpha/beta/rc tags
-release = _version
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -36,6 +29,7 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx_rtd_theme',
+    'sphinx_copybutton'
 ]
 
 templates_path = ['_templates']
@@ -50,9 +44,9 @@ pygments_style = 'sphinx'
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'furo'
 add_module_names = False
-html_title = 'Python'
+html_title = 'S-Tool'
 
 html_static_path = ['_static']
 
